@@ -24,4 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Error fetching data. Please try again.");
     }
   }
+
+  function clearSearch() {
+    searchInput.value = "";
+    pokemonResults.innerHTML = "";
+  }
 });
