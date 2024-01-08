@@ -1,3 +1,4 @@
+// Execute the following code when the DOM content is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("searchInput");
   const searchButton = document.getElementById("searchButton");
@@ -96,13 +97,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // Display previous search results in the UI
     previousSearches.innerHTML = "";
     previousSearchesHeading.classList.remove("hidden");
-    previousResults.forEach((result, index) => {
+    previousResults.forEach((result) => {
       const previousResultItem = document.createElement("div");
       previousResultItem.classList.add("previous-result-item");
-      previousResultItem.innerHTML = `
-      <img src="${result.sprites.front_default}" alt="${result.name}">
-      <p>${result.name}</p>
-        `;
+      const img = document.createElement("img");
+      img.src = result.sprites.front_default;
+      previousResultItem.appendChild(img);
+
+      const name = document.createElement("p");
+      name.textContent = result.name;
+      previousResultItem.appendChild(name);
+
       previousSearches.appendChild(previousResultItem);
     });
   }
