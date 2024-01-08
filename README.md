@@ -6,7 +6,7 @@ This repository contains the source code for a single-page web application that 
 
 ## Features
 
-- **Search Functionality:** Users can search for Pokemon by name, type, or other criteria using the search bar.
+- **Search Functionality:** Users can search for Pokemon by name using the search bar.
 - **Search History:** Previously searched Pokemon results are displayed for easy reference.
 
 ## Getting Started
