@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const loadingSpinner = document.getElementById("loadingSpinner");
   const pokemonResults = document.getElementById("pokemonResults");
   const previousSearches = document.getElementById("previousSearches");
+  const previousSearchesHeading = document.getElementById("hidden");
 
   let previousResults = [];
 
@@ -19,22 +20,32 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    loadingSpinner.style.display = "block";
+
     try {
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${searchTerm}`
       );
       const data = await response.json();
-      console.log(data);
+
+      pokemonResults.innerHTML = "";
       displayPokemon(data);
+
+      previousResults.push(data);
+      updatePreviousSearches();
     } catch (error) {
-      console.error("Error fetching data:", error);
       alert("Error fetching data. Please try again.");
+    } finally {
+      loadingSpinner.style.display = "none";
     }
   }
 
   function clearSearch() {
     searchInput.value = "";
     pokemonResults.innerHTML = "";
+    previousResults = [];
+    updatePreviousSearches();
+    previousSearchesHeading.classList.add("hidden");
   }
 
   function displayPokemon(pokemon) {
@@ -51,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
     imageContainer.classList.add("pokemon-image-container");
     const pokemonImage = document.createElement("img");
     pokemonImage.src = pokemon.sprites.front_default;
-    pokemonImage.alt = pokemon.name;
     imageContainer.appendChild(pokemonImage);
 
     // Add Pokemon name
@@ -70,5 +80,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Append the container to the results section
     pokemonResults.appendChild(cardContainer);
+  }
+
+  function updatePreviousSearches() {
+    // Display previous search results in the UI
+    previousSearches.innerHTML = "";
+    previousSearchesHeading.classList.remove("hidden");
+    previousResults.forEach((result, index) => {
+      const previousResultItem = document.createElement("div");
+      previousResultItem.classList.add("previous-result-item");
+      previousResultItem.innerHTML = `
+      <img src="${result.sprites.front_default}" alt="${result.name}">
+      <p>${result.name}</p>
+        `;
+      previousSearches.appendChild(previousResultItem);
+    });
   }
 });
