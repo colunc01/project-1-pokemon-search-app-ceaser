@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
       previousResults.push(data);
       updatePreviousSearches();
     } catch (error) {
-      alert("Error fetching data. Please try again.");
+      alert("Error fetching data.Please try again.");
     } finally {
       loadingSpinner.style.display = "none";
     }
