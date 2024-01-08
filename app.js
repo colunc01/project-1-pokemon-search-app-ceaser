@@ -13,6 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function handleSearch() {
     const searchTerm = searchInput.value.trim().toLowerCase();
+
+    if (searchTerm === "") {
+      alert("Please enter a valid search term.");
+      return;
+    }
+
     try {
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${searchTerm}`
