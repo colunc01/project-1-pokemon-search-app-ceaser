@@ -7,4 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const previousSearches = document.getElementById("previousSearches");
 
   let previousResults = [];
+
+  searchButton.addEventListener("click", handleSearch);
+  clearButton.addEventListener("click", clearSearch);
+  searchInput.addEventListener("focus", handleFocus);
 });
