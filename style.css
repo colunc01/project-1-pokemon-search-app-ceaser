@@ -106,7 +106,7 @@ button {
   border: 1px solid var(--secondary-color);
   border-radius: 8px;
   box-shadow: var(--box-shadow);
-  transition: transform var(--transition-duration) ease-in-out;
+  transition: transform var(--transition-duration), ease-in-out;
 }
 
 .previous-result-item:hover {
