@@ -11,6 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   searchButton.addEventListener("click", handleSearch);
   clearButton.addEventListener("click", clearSearch);
+  searchInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  });
 
   async function handleSearch() {
     const searchTerm = searchInput.value.trim().toLowerCase();
