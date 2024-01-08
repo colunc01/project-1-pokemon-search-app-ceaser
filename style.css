@@ -45,8 +45,8 @@ button {
 .previous-searches {
   margin-top: 20px;
   display: flex;
-  flex-grow: 1; /* Allow it to expand within the container */
-  max-height: 200px; /* Set a maximum height for the container */
+  flex-grow: 1;
+  max-height: 200px;
   overflow-y: auto;
 }
 
