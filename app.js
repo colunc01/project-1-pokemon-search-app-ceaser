@@ -38,12 +38,37 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displayPokemon(pokemon) {
-    const pokemonCard = document.createElement("div");
-    pokemonCard.classList.add("Pokemon-card");
-    pokemonCard.innerHTML = `
-    <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
-    <p>${pokemon.name}</p>`;
+    // Create a container for the card
+    const cardContainer = document.createElement("div");
+    cardContainer.classList.add("pokemon-card-container");
 
-    pokemonResults.appendChild(pokemonCard);
+    // Create the actual card
+    const pokemonCard = document.createElement("div");
+    pokemonCard.classList.add("pokemon-card");
+
+    // Add Pokemon image
+    const imageContainer = document.createElement("div");
+    imageContainer.classList.add("pokemon-image-container");
+    const pokemonImage = document.createElement("img");
+    pokemonImage.src = pokemon.sprites.front_default;
+    pokemonImage.alt = pokemon.name;
+    imageContainer.appendChild(pokemonImage);
+
+    // Add Pokemon name
+    const nameContainer = document.createElement("div");
+    nameContainer.classList.add("pokemon-name-container");
+    const pokemonName = document.createElement("p");
+    pokemonName.textContent = pokemon.name;
+    nameContainer.appendChild(pokemonName);
+
+    // Append image and name to the card
+    pokemonCard.appendChild(imageContainer);
+    pokemonCard.appendChild(nameContainer);
+
+    // Append the card to the container
+    cardContainer.appendChild(pokemonCard);
+
+    // Append the container to the results section
+    pokemonResults.appendChild(cardContainer);
   }
 });
