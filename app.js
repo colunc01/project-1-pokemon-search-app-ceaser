@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       const data = await response.json();
       console.log(data);
+      displayPokemon(data);
     } catch (error) {
       console.error("Error fetching data:", error);
       alert("Error fetching data. Please try again.");
@@ -34,5 +35,15 @@ document.addEventListener("DOMContentLoaded", function () {
   function clearSearch() {
     searchInput.value = "";
     pokemonResults.innerHTML = "";
+  }
+
+  function displayPokemon(pokemon) {
+    const pokemonCard = document.createElement("div");
+    pokemonCard.classList.add("Pokemon-card");
+    pokemonCard.innerHTML = `
+    <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+    <p>${pokemon.name}</p>`;
+
+    pokemonResults.appendChild(pokemonCard);
   }
 });
