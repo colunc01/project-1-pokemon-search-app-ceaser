@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const previousSearches = document.getElementById("previousSearches");
   const previousSearchesHeading = document.getElementById("hidden");
 
+  // Store previous search results
   let previousResults = [];
 
   searchButton.addEventListener("click", handleSearch);
@@ -28,14 +29,16 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingSpinner.style.display = "block";
 
     try {
+      // Fetch Pokemon data
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${searchTerm}`
       );
       const data = await response.json();
 
+      // Clear previous results and display current result
       pokemonResults.innerHTML = "";
       displayPokemon(data);
-
+      // Save the current search result to history
       previousResults.push(data);
       updatePreviousSearches();
     } catch (error) {
@@ -45,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Clear the search input and results
   function clearSearch() {
     searchInput.value = "";
     pokemonResults.innerHTML = "";
@@ -87,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
     pokemonResults.appendChild(cardContainer);
   }
 
+  // Update the UI with previous search results
   function updatePreviousSearches() {
     // Display previous search results in the UI
     previousSearches.innerHTML = "";
