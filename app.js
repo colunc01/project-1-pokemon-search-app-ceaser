@@ -10,5 +10,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   searchButton.addEventListener("click", handleSearch);
   clearButton.addEventListener("click", clearSearch);
-  searchInput.addEventListener("focus", handleFocus);
+
+  async function handleSearch() {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    try {
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${searchTerm}`
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      alert("Error fetching data. Please try again.");
+    }
+  }
 });
