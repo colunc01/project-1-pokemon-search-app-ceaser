@@ -3,9 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pokemon Search App</title>
     <link rel="stylesheet" href="style.css" />
+    <title>Pokemon Search App</title>
   </head>
-  <body></body>
-  <script src="app.js"></script>
+  <body>
+    <div class="container">
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search Pokemon" />
+        <button id="searchButton">Search</button>
+        <button id="clearButton">clear</button>
+      </div>
+      <div class="loading" id="loadingSpinner"></div>
+      <div class="pokemon-results" id="pokemonResults"></div>
+
+      <div class="previous-search-container">
+        <h2 class="hidden" id="hidden">Previous History</h2>
+        <div id="previousSearches" class="previous-searches"></div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
 </html>
