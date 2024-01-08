@@ -1,5 +1,14 @@
+:root {
+  --font-family: Arial, sans-serif;
+  --primary-color: #3498db;
+  --secondary-color: #ddd;
+  --background-color: #f8f8f8;
+  --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  --transition-duration: 0.3s;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family);
   margin: 0;
   padding: 0;
 }
@@ -8,9 +17,9 @@ body {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--secondary-color);
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
 }
 
 .search-container {
@@ -29,7 +38,7 @@ button {
 
 .loading {
   border: 6px solid #f3f3f3;
-  border-top: 6px solid #3498db;
+  border-top: 6px solid var(--primary-color);
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -56,11 +65,11 @@ button {
 
 .pokemon-card-container {
   margin: 10px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--secondary-color);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  box-shadow: var(--box-shadow);
+  transition: transform var(--transition-duration) ease-in-out;
 }
 
 .pokemon-card-container:hover {
@@ -84,8 +93,8 @@ button {
 .pokemon-name-container {
   text-align: center;
   padding: 10px;
-  background-color: #f8f8f8;
-  border-top: 1px solid #ddd;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--secondary-color);
 }
 
 .previous-result-item {
@@ -94,10 +103,10 @@ button {
   align-items: center;
   margin: 10px 5px;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--secondary-color);
   border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  box-shadow: var(--box-shadow);
+  transition: transform var(--transition-duration) ease-in-out;
 }
 
 .previous-result-item:hover {
