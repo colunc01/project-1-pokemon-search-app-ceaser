@@ -1,3 +1,4 @@
+/*creating the root so that this format is the html element*/
 :root {
   --font-family: "Roboto", sans-serif;
   --primary-color: #3e5aac;
@@ -58,6 +59,7 @@ button:hover {
   animation: spin 1s linear infinite;
 }
 
+/*Creating a CSS at-rule that controls the intermediate steps in a CSS animation by defining the sequence of the spinner*/
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -160,5 +162,3 @@ button:hover {
   width: 120px; 
   text-align: center;
 }
-
-

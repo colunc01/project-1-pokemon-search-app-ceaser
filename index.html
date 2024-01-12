@@ -11,24 +11,30 @@
     <title>Pokemon Search App</title>
   </head>
   <body>
+    <!--Displays Container for the top Search Bar and buttons-->
     <div class="container">
       <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search Pokemon" />
         <button id="searchButton">Search</button>
-        <button id="clearButton">clear</button>
+        <button id="clearButton">Clear</button>
         <button id="createTeam">Create Team</button>
       </div>
+
+      <!--Displays the loading spinner-->
       <div class="loading" id="loadingSpinner"></div>
       <div class="pokemon-results" id="pokemonResults"></div>
 
+      <!--Displays Container of previous searches-->
       <div class="previous-search-container">
         <h2 class="hidden" id="hidden">Previous History</h2>
         <div id="previousSearches" class="previous-searches"></div>
       </div>
+
+      <!--Displays container to clear the team that was randomly generated-->
       <div class="team-container">
-        <button id="clearTeam">Clear Team</button>
         <h2 class="hidden" id="teamHeading">Here is Your Team</h2>
         <div id="teamResults" class="team-results"></div>
+        <button id="clearTeam" class="hidden">Clear Team</button>
       </div>
     </div>
     <script src="app.js"></script>
