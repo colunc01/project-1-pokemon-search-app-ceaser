@@ -186,3 +186,30 @@ button:hover {
   padding: 5px;
   border-bottom: 1px solid var(--secondary-color);
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.div-tooltip{
+  opacity:0;
+  position:fixed;
+  top:0;
+  left:0;
+  background:#444;
+  color: #fff;
+  z-index: 99999;
+}
