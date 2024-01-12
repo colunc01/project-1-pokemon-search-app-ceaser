@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const previousSearchesHeading = document.getElementById("hidden");
   const rightClickContainer = document.getElementById("rightClickContainer");
   const abilityContainer = document.getElementById("abilityContainer");
+  const abilityResults = document.getElementById("abilityResults");
 
   // Store previous search results
   let previousResults = [];
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
   clearButton.addEventListener("click", clearSearch);
   createTeam.addEventListener("click", createsYourTeam);
   clearTeamButton.addEventListener("click", clearTeam);
-  pokemonResults.addEventListener("oncontextmenu", displayAbilities)
+  abilityResults.addEventListener("oncontextmenu", displayAbilities);
   searchInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       handleSearch();
@@ -152,7 +153,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function that will display pokemon abilities when right clicked
-  async function displayAbilities(pokemon){
+  async function displayAbilities(){
+    console.log("click");
 
     // function(event){
     //   console.log("right clik");
@@ -168,36 +170,36 @@ document.addEventListener("DOMContentLoaded", function () {
     //     fetchPokemon(pokemonName, false, true);
     //   }}
 
-    console.log("HEY INSIDE RIGHT CLICK FUNCTION");
-    const abilityHeading = document.getElementById("abilityHeading");
+    // console.log("HEY INSIDE RIGHT CLICK FUNCTION");
+    // const abilityHeading = document.getElementById("abilityHeading");
 
-    //clear previous abilities
-    rightClickContainer.innerHTML = "";
-    abilityHeading.classList.remove("hidden");
+    // //clear previous abilities
+    // rightClickContainer.innerHTML = "";
+    // abilityHeading.classList.remove("hidden");
 
-    //Dispaly each ability
-    pokemon.abilities.forEach((ability) => {
-      const abilityItem = document.createElement("p");
-      abilityItem.textContent = ability.ability.name;
-      abilityContainer.appendChild(abilityItem);
-    });
+    // //Display each ability
+    // pokemon.abilities.forEach((ability) => {
+    //   const abilityItem = document.createElement("p");
+    //   abilityItem.textContent = ability.ability.name;
+    //   abilityContainer.appendChild(abilityItem);
+    // });
 
-    //Display the right click container
-    rightClickContainer.style.top ='${event.clientY}px';
-    rightClickContainer.style.left='${event.clientX}px';
-    rightClickContainer.style.display="block";
+    // //Display the right click container
+    // rightClickContainer.style.top ='${event.clientY}px';
+    // rightClickContainer.style.left='${event.clientX}px';
+    // rightClickContainer.style.display="block";
 
-    //Close right click container on any click outside of it
-    document.addEventListener("click", function(event){
-      if(!rightClickContainer.contains(event.target)){
-        rightClickContainer.style.display = "none";
-      }
-    });
+    // //Close right click container on any click outside of it
+    // document.addEventListener("click", function(event){
+    //   if(!rightClickContainer.contains(event.target)){
+    //     rightClickContainer.style.display = "none";
+    //   }
+    // });
   }
 
   // Clear the search input and results
   async function clearSearch() {
-    searchInput.value = "";i
+    searchInput.value = ""; 
     pokemonResults.innerHTML = "";
     previousResults = [];
     updatePreviousSearches();
