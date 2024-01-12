@@ -1,8 +1,11 @@
 // Execute the following code when the DOM content is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
+
+  // Gets references to a different elements by their IDs
   const searchInput = document.getElementById("searchInput");
   const searchButton = document.getElementById("searchButton");
   const clearButton = document.getElementById("clearButton");
+  const createTeam = document.getElementById('createTeam'); // creates team
   const loadingSpinner = document.getElementById("loadingSpinner");
   const pokemonResults = document.getElementById("pokemonResults");
   const previousSearches = document.getElementById("previousSearches");
@@ -11,31 +14,47 @@ document.addEventListener("DOMContentLoaded", function () {
   // Store previous search results
   let previousResults = [];
 
+  //Add event listeners to buttons and search input
   searchButton.addEventListener("click", handleSearch);
   clearButton.addEventListener("click", clearSearch);
+  createTeam.addEventListener("click", createsYourTeam);
   searchInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       handleSearch();
     }
   });
 
+  // Asynchronous function to handle the search of the API
   async function handleSearch() {
     const searchTerm = searchInput.value.trim().toLowerCase();
 
+    // Checks if the Search Term is empty
     if (searchTerm === "") {
-      alert("Please enter a valid search term.");
+      alert("Please enter a valid Pokemon name.");
       return;
     }
 
+    // Displays a loading spinner
     loadingSpinner.style.display = "block";
 
+    // Calls the fetch function
+    fetchPokemon(searchTerm);
+  }
+
+  // Fetch function to be called to get pokemon
+  async function fetchPokemon(searchTerm){
     try {
-      // Fetch Pokemon data
+      // Fetch Pokemon data based on the search term
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${searchTerm}`
       );
       const data = await response.json();
+      console.log("in fetch pokemon");
+      console.log(data);
+      console.log(response);
 
+      // MAYBE: add something to detemine if search or team;
+   
       // Clear previous results and display current result
       pokemonResults.innerHTML = "";
       displayPokemon(data);
@@ -43,10 +62,29 @@ document.addEventListener("DOMContentLoaded", function () {
       previousResults.push(data);
       updatePreviousSearches();
     } catch (error) {
-      alert("Error fetching data.Please try again.");
+      alert("Error: Pokemon Doesn't Exist. Please try again.");
     } finally {
+      // Hides loading spinner
       loadingSpinner.style.display = "none";
     }
+
+  }
+
+  // Function is called that would get 5 random pokemon and fetch 3 attributes of each
+  function createsYourTeam(){
+    const randomPokemonIds = Array.from({length: 5}, () =>
+    Math.floor(Math.random()*700) + 1 // Assuming 700 are the maximum amount of pokemon
+    );
+    console.log(randomPokemonIds);
+
+    for (let i=0; i<randomPokemonIds.length; i++){
+      fetchPokemon(randomPokemonIds[i]);
+    }
+
+  }
+
+  function displayTeam(){
+
   }
 
   // Clear the search input and results
@@ -58,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
     previousSearchesHeading.classList.add("hidden");
   }
 
+  // Display Pokemon Details
   function displayPokemon(pokemon) {
     // Create a container for the card
     const cardContainer = document.createElement("div");
@@ -81,9 +120,17 @@ document.addEventListener("DOMContentLoaded", function () {
     pokemonName.textContent = pokemon.name;
     nameContainer.appendChild(pokemonName);
 
+    // Add Pokemon weight
+    const weightContainer = document.createElement("div");
+    weightContainer.classList.add("pokemon-weight-container");
+    const pokemonWeight = document.createElement("p");
+    pokemonWeight.textContent = pokemon.id;
+    weightContainer.appendChild(pokemonWeight);
+
     // Append image and name to the card
     pokemonCard.appendChild(imageContainer);
     pokemonCard.appendChild(nameContainer);
+    pokemonCard.appendChild(weightContainer);
 
     // Append the card to the container
     cardContainer.appendChild(pokemonCard);
