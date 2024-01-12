@@ -106,6 +106,13 @@ button:hover {
   text-align: center;
 }
 
+.pokemon-weight-container{
+  text-align: center;
+  font-size: 15px;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--secondary-color);
+}
+
 .pokemon-image-container img {
   max-width: 100%;
   height: auto;
@@ -139,3 +146,19 @@ button:hover {
   height: auto;
   margin-right: 10px;
 }
+
+.team-container {
+  margin-top: 20px;
+}
+
+.team-results {
+  display: flex;
+  gap: 10px;
+}
+
+.team-card {
+  width: 120px; 
+  text-align: center;
+}
+
+
