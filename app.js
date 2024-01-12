@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const clearButton = document.getElementById("clearButton");
   const createTeam = document.getElementById('createTeam'); // creates team
   const teamResults = document.getElementById("teamResults");
-  const teamHeading = document.getElementById("teamHeading"); // gpt add
-  const clearTeamButton = document.getElementById("clearTeam"); // gpt add
+  const teamHeading = document.getElementById("teamHeading"); 
+  const clearTeamButton = document.getElementById("clearTeam"); 
   const loadingSpinner = document.getElementById("loadingSpinner");
   const pokemonResults = document.getElementById("pokemonResults");
   const previousSearches = document.getElementById("previousSearches");
@@ -91,11 +91,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Show team container
     teamHeading.classList.remove("hidden");
+    clearTeamButton.classList.remove("hidden");
   }
 
+  // Function that clears the randomly generated team
   function clearTeam(){
     teamResults.innerHTML = "";
     teamHeading.classList.add("hidden");
+    clearTeamButton.classList.add("hidden");
   }
 
   // Displays the Randomly Generated Pokemon Team
@@ -148,6 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
     previousResults = [];
     updatePreviousSearches();
     previousSearchesHeading.classList.add("hidden");
+    clearTeamButton.classList.add("hidden");
   }
 
   // Display Pokemon Details
@@ -193,9 +197,8 @@ document.addEventListener("DOMContentLoaded", function () {
     pokemonResults.appendChild(cardContainer);
   }
 
-  // Update the UI with previous search results
+  // Update the UI with previous search results and displays them
   function updatePreviousSearches() {
-    // Display previous search results in the UI
     previousSearches.innerHTML = "";
     previousSearchesHeading.classList.remove("hidden");
     previousResults.forEach((result) => {
