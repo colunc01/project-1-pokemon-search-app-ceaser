@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const pokemonResults = document.getElementById("pokemonResults");
   const previousSearches = document.getElementById("previousSearches");
   const previousSearchesHeading = document.getElementById("hidden");
+  const rightClickContainer = document.getElementById("rightClickContainer");
+  const abilityContainer = document.getElementById("abilityContainer");
 
   // Store previous search results
   let previousResults = [];
@@ -22,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
   clearButton.addEventListener("click", clearSearch);
   createTeam.addEventListener("click", createsYourTeam);
   clearTeamButton.addEventListener("click", clearTeam);
+  pokemonResults.addEventListener("oncontextmenu", displayAbilities)
   searchInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       handleSearch();
@@ -42,11 +45,11 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingSpinner.style.display = "block";
 
     // Calls the fetch function
-    fetchPokemon(searchTerm, false);
+    fetchPokemon(searchTerm, false, false);
   }
 
   // Fetch function to be called to get pokemon
-  async function fetchPokemon(searchTerm, isTeamSearch = false ){
+  async function fetchPokemon(searchTerm, isTeamSearch = false, getAbilities = false){
     try {
       // Fetch Pokemon data based on the search term
       const response = await fetch(
@@ -54,20 +57,24 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       const data = await response.json();
 
-      console.log(searchTerm);
-      console.log(data);
-
-      // MAYBE: add something to detemine if search or team;
-      if(!isTeamSearch){
-        // Clear previous results and display current result
-        pokemonResults.innerHTML = "";
-        displayPokemon(data);
-        // Save the current search result to history
-        previousResults.push(data);
-        updatePreviousSearches();
+      if(getAbilities){
+        displayAbilities(data);
       } else {
-        displayTeam(data);
-      }  
+        console.log(searchTerm);
+        console.log(data);
+
+        // MAYBE: add something to detemine if search or team;
+        if(!isTeamSearch){
+          // Clear previous results and display current result
+          pokemonResults.innerHTML = "";
+          displayPokemon(data);
+          // Save the current search result to history
+          previousResults.push(data);
+          updatePreviousSearches();
+        } else {
+          displayTeam(data);
+        }  
+      }
     } catch (error) {
       alert("Error: Pokemon Doesn't Exist. Please try again.");
     } finally {
@@ -95,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function that clears the randomly generated team
-  function clearTeam(){
+  async function clearTeam(){
     teamResults.innerHTML = "";
     teamHeading.classList.add("hidden");
     clearTeamButton.classList.add("hidden");
@@ -144,9 +151,53 @@ document.addEventListener("DOMContentLoaded", function () {
     teamResults.appendChild(cardContainer);
   }
 
+  // Function that will display pokemon abilities when right clicked
+  async function displayAbilities(pokemon){
+
+    // function(event){
+    //   console.log("right clik");
+    //   event.preventDefault();
+    //   const targetPokeonCard = event.target.closest(".pokemon-card-container");
+  
+    //   if(targetPokeonCard){
+    //     const pokemonName = targetPokeonCard.querySelector(
+    //       ".pokemon-name-container p"
+    //     ).textContent;
+  
+    //     //Fetch Pokemon details again to get abilities
+    //     fetchPokemon(pokemonName, false, true);
+    //   }}
+
+    console.log("HEY INSIDE RIGHT CLICK FUNCTION");
+    const abilityHeading = document.getElementById("abilityHeading");
+
+    //clear previous abilities
+    rightClickContainer.innerHTML = "";
+    abilityHeading.classList.remove("hidden");
+
+    //Dispaly each ability
+    pokemon.abilities.forEach((ability) => {
+      const abilityItem = document.createElement("p");
+      abilityItem.textContent = ability.ability.name;
+      abilityContainer.appendChild(abilityItem);
+    });
+
+    //Display the right click container
+    rightClickContainer.style.top ='${event.clientY}px';
+    rightClickContainer.style.left='${event.clientX}px';
+    rightClickContainer.style.display="block";
+
+    //Close right click container on any click outside of it
+    document.addEventListener("click", function(event){
+      if(!rightClickContainer.contains(event.target)){
+        rightClickContainer.style.display = "none";
+      }
+    });
+  }
+
   // Clear the search input and results
-  function clearSearch() {
-    searchInput.value = "";
+  async function clearSearch() {
+    searchInput.value = "";i
     pokemonResults.innerHTML = "";
     previousResults = [];
     updatePreviousSearches();

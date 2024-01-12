@@ -162,3 +162,27 @@ button:hover {
   width: 120px; 
   text-align: center;
 }
+
+.right-click {
+  position: fixed;
+  display: none;
+  background-color: rgb(211, 211, 211);
+  border: 1px solid var(--secondary-color);
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  padding: 10px;
+  max-width: 200px;
+  z-index: 999; /* Ensure it's on top of other elements */
+}
+
+.right-click h2 {
+  font-size: 10px;
+  margin-bottom: 8px;
+  color: var(--primary-color);
+}
+
+.right-click p {
+  margin: 0;
+  padding: 5px;
+  border-bottom: 1px solid var(--secondary-color);
+}
