@@ -12,8 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const pokemonResults = document.getElementById("pokemonResults");
   const previousSearches = document.getElementById("previousSearches");
   const previousSearchesHeading = document.getElementById("hidden");
-  const rightClickContainer = document.getElementById("rightClickContainer");
-  const abilityContainer = document.getElementById("abilityContainer");
 
   // Store previous search results
   let previousResults = [];
@@ -55,10 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
         `https://pokeapi.co/api/v2/pokemon/${searchTerm}`
       );
       const data = await response.json();
-
-      console.log(searchTerm);
-      console.log(data);
-
       // MAYBE: add something to detemine if search or team;
       if (!isTeamSearch) {
         // Clear previous results and display current result
@@ -79,44 +73,66 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  let setUpToolTip = function () {
-    let toolTip = "",
-      toolTipDiv = document.querySelector(".div-tooltip"),
-      toolTipElements = Array.from(document.querySelector(".team-results"));
+  const tooltipContainer = document.createElement("div");
+  tooltipContainer.classList.add("tooltip-container");
+  document.querySelector(".container").appendChild(tooltipContainer);
 
-    console.log("setuptooltip");
-    console.log(toolTipElements);
+  const tooltipElement = document.createElement("div");
+  tooltipElement.id = "tooltip";
+  tooltipContainer.appendChild(tooltipElement);
 
-    let displayToolTip = function (e, obj) {
-      toolTip = obj.dataset.toolTip;
-      toolTipDiv.innerHTML = toolTip;
-      toolTipDiv.style.top = e.pageY + "px";
-      toolTipDiv.style.left = e.pageX + "px";
-      toolTipDiv.style.opacity = 1;
-    };
-
-    toolTipElements.forEach(function (elem) {
-      elem.addEventListener("mouseenter", function (e) {
-        displayToolTip(e, this);
-      });
-    });
-  };
-
-  // Function to display abilities in the tooltip --> This isn't working either
-  // function displayAbilitiesTooltip(pokemon, toolTipElement) {
-  //   const abilitiesText = createAbilityTooltipText(pokemon);
-  //   tooltipElement.textContent = abilitiesText;
-  //   console.log(abilitiesText);
-  // }
-
-  // Function to create a tooltip text for abilities
-  // MIGHT HAVE TO USE THIS FOR TOOL TIP
   function createAbilityTooltipText(pokemon) {
     const abilities = pokemon.abilities.map((ability) => ability.ability.name);
-    console.log("create ability tool tip text function");
-    console.log(abilities);
     return abilities.join(", ");
   }
+
+  function displayAbilitiesTooltip(pokemon, toolTipElement) {
+    const abilitiesText = createAbilityTooltipText(pokemon);
+    toolTipElement.textContent = abilitiesText;
+    toolTipElement.style.visibility = "visible";
+  }
+
+  //Handles the hover event on a Pokemon card to display its abilities tooltip.
+  function handlePokemonCardHover(event, pokemon) {
+    const toolTipElement = document.getElementById("tooltip");
+
+    if (toolTipElement) {
+      displayAbilitiesTooltip(pokemon, toolTipElement);
+      // Get the dimensions and position of the card container
+      const containerRect = event.currentTarget.getBoundingClientRect();
+      // Calculate the top position of the tooltip to position it above the Pokémon card.
+      toolTipElement.style.top =
+        containerRect.top - toolTipElement.offsetHeight + window.scrollY + "px";
+      // Calculate the left position of the tooltip, centering it horizontally
+      toolTipElement.style.left =
+        containerRect.left + containerRect.width / 2 + "px";
+      toolTipElement.style.visibility = "visible";
+    }
+  }
+
+  function createTooltip(cardContainer, pokemon) {
+    const toolTipElement = document.createElement("div");
+    toolTipElement.classList.add("tooltip");
+    cardContainer.appendChild(toolTipElement);
+
+    cardContainer.addEventListener("mouseover", (event) =>
+      handlePokemonCardHover(event, pokemon, toolTipElement)
+    );
+    cardContainer.addEventListener(
+      "mouseout",
+      () => (toolTipElement.style.visibility = "hidden")
+    );
+  }
+
+  function hideTooltip() {
+    const toolTipElement = document.getElementById("tooltip");
+    if (toolTipElement) {
+      toolTipElement.style.visibility = "hidden";
+    }
+  }
+
+  const containerElement = document.querySelector(".container");
+  containerElement.addEventListener("mouseout", hideTooltip);
 
   // Function is called that would get 5 random pokemon and fetch 3 attributes of each
   async function createsYourTeam() {
@@ -127,22 +143,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Clear previous team results
     teamResults.innerHTML = "";
-
+    teamHeading.classList.remove("hidden");
+    loadingSpinner.style.display = "block";
     for (let i = 0; i < randomPokemonIds.length; i++) {
       await fetchPokemon(randomPokemonIds[i], true);
     }
-    setUpToolTip();
-
-    console.log("hi");
-    console.log(randomTeam);
-
+    loadingSpinner.style.display = "none";
     // Show team container
-    teamHeading.classList.remove("hidden");
     clearTeamButton.classList.remove("hidden");
   }
 
   // Function that clears the randomly generated team
-  async function clearTeam() {
+  function clearTeam() {
     teamResults.innerHTML = "";
     randomTeam.splice(0, randomTeam.length); // used a destructive splice method because we want to change the array
     teamHeading.classList.add("hidden");
@@ -158,6 +170,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Create the actual card
     const pokemonCard = document.createElement("div");
     pokemonCard.classList.add("pokemon-card");
+
+    createTooltip(cardContainer, pokemon);
 
     // Add Pokemon image
     const imageContainer = document.createElement("div");
@@ -193,13 +207,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Clear the search input and results
-  async function clearSearch() {
+  function clearSearch() {
     searchInput.value = "";
     pokemonResults.innerHTML = "";
     previousResults = [];
     updatePreviousSearches();
     previousSearchesHeading.classList.add("hidden");
-    clearTeamButton.classList.add("hidden");
+    clearTeam();
   }
 
   // Display Pokemon Details
@@ -249,20 +263,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Append the container to the results section
     pokemonResults.appendChild(cardContainer);
 
-    // Add eventListener for mouseover to display tooltip
-    cardContainer.addEventListener("mouseover", function () {
-      toolTipElement.style.visibility = "visible";
-      //displayAbilitiesTooltip(pokemon, toolTipElement);
-      createAbilityTooltipText(pokemon);
-    });
-
-    // Add Event listener for mouse out to hide tooltip
-    cardContainer.addEventListener("mouseout", function () {
-      tooltipElement.style.visibility = "hidden";
-    });
+    createTooltip(cardContainer, pokemon);
   }
 
-  // Update the UI with previous search results and display
+  // Update the UI with previous search results and displays them
   function updatePreviousSearches() {
     previousSearches.innerHTML = "";
     previousSearchesHeading.classList.remove("hidden");
@@ -276,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const name = document.createElement("p");
       name.textContent = result.name;
       previousResultItem.appendChild(name);
+
       previousSearches.appendChild(previousResultItem);
     });
   }
