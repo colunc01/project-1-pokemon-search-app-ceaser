@@ -10,6 +10,7 @@ This repository contains the Flatiron Phase 1 Project for Cesar Colunga. The sou
 - **Clear Team Functionality:** Users can clear the team that was generated 
 - **Search Functionality:** Users can search for Pokemon by name using the search bar.
 - **Search History:** Previously searched Pokemon results are displayed for easy reference.
+- **Tooltip Functionality:** So long as there is a pokemon on the page; the cursor/mouse will showcase the pokemon's abiilties when it is over the Pokemon's container for a period of time.
 
 ## Getting Started
 
