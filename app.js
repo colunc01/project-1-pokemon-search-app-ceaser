@@ -1,14 +1,13 @@
 // Execute the following code when the DOM content is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-
   // Gets references to a different elements by their IDs
   const searchInput = document.getElementById("searchInput");
   const searchButton = document.getElementById("searchButton");
   const clearButton = document.getElementById("clearButton");
-  const createTeam = document.getElementById('createTeam'); // creates team
+  const createTeam = document.getElementById("createTeam"); // creates team
   const teamResults = document.getElementById("teamResults");
-  const teamHeading = document.getElementById("teamHeading"); 
-  const clearTeamButton = document.getElementById("clearTeam"); 
+  const teamHeading = document.getElementById("teamHeading");
+  const clearTeamButton = document.getElementById("clearTeam");
   const loadingSpinner = document.getElementById("loadingSpinner");
   const pokemonResults = document.getElementById("pokemonResults");
   const previousSearches = document.getElementById("previousSearches");
@@ -16,10 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const rightClickContainer = document.getElementById("rightClickContainer");
   const abilityContainer = document.getElementById("abilityContainer");
 
-
   // Store previous search results
   let previousResults = [];
-  let randomTeam =[];
+  let randomTeam = [];
 
   //Add event listeners to buttons and search input
   searchButton.addEventListener("click", handleSearch);
@@ -50,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Fetch function to be called to get pokemon
-  async function fetchPokemon(searchTerm, isTeamSearch = false){
+  async function fetchPokemon(searchTerm, isTeamSearch = false) {
     try {
       // Fetch Pokemon data based on the search term
       const response = await fetch(
@@ -62,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(data);
 
       // MAYBE: add something to detemine if search or team;
-      if(!isTeamSearch){
+      if (!isTeamSearch) {
         // Clear previous results and display current result
         pokemonResults.innerHTML = "";
         displayPokemon(data);
@@ -72,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         displayTeam(data);
         randomTeam.push(data);
-      }  
+      }
     } catch (error) {
       alert("Error: Pokemon Doesn't Exist. Please try again.");
     } finally {
@@ -81,27 +79,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  let setUpToolTip = function(){
+  let setUpToolTip = function () {
     let toolTip = "",
-    toolTipDiv = document.querySelector(".div-tooltip"),
-    toolTipElements = Array.from(document.querySelector(".team-results"));
+      toolTipDiv = document.querySelector(".div-tooltip"),
+      toolTipElements = Array.from(document.querySelector(".team-results"));
 
     console.log("setuptooltip");
     console.log(toolTipElements);
 
-    let displayToolTip = function(e, obj){
+    let displayToolTip = function (e, obj) {
       toolTip = obj.dataset.toolTip;
-      toolTipDiv.innerHTML =toolTip;
+      toolTipDiv.innerHTML = toolTip;
       toolTipDiv.style.top = e.pageY + "px";
-      toolTipDiv.style.left = e.pageX +"px";
+      toolTipDiv.style.left = e.pageX + "px";
       toolTipDiv.style.opacity = 1;
     };
 
-    toolTipElements.forEach(function (elem){
-      elem.addEventListener("mouseenter", function(e){
+    toolTipElements.forEach(function (elem) {
+      elem.addEventListener("mouseenter", function (e) {
         displayToolTip(e, this);
-      })
-    })
+      });
+    });
   };
 
   // Function to display abilities in the tooltip --> This isn't working either
@@ -121,20 +119,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function is called that would get 5 random pokemon and fetch 3 attributes of each
-  async function createsYourTeam(){
-    const randomPokemonIds = Array.from({length: 6}, () =>
-    Math.floor(Math.random()*700) + 1 // Assuming 700 are the maximum amount of pokemon
+  async function createsYourTeam() {
+    const randomPokemonIds = Array.from(
+      { length: 6 },
+      () => Math.floor(Math.random() * 700) + 1 // Assuming 700 are the maximum amount of pokemon
     );
 
     // Clear previous team results
     teamResults.innerHTML = "";
 
-    for (let i=0; i<randomPokemonIds.length; i++){
+    for (let i = 0; i < randomPokemonIds.length; i++) {
       await fetchPokemon(randomPokemonIds[i], true);
     }
     setUpToolTip();
 
-    console.log('hi');
+    console.log("hi");
     console.log(randomTeam);
 
     // Show team container
@@ -143,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function that clears the randomly generated team
-  async function clearTeam(){
+  async function clearTeam() {
     teamResults.innerHTML = "";
     randomTeam.splice(0, randomTeam.length); // used a destructive splice method because we want to change the array
     teamHeading.classList.add("hidden");
@@ -151,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Displays the Randomly Generated Pokemon Team
-  function displayTeam(pokemon){
+  function displayTeam(pokemon) {
     // Create a container for the card
     const cardContainer = document.createElement("div");
     cardContainer.classList.add("pokemon-card-container", "team-card"); // Add "team-card" class
@@ -195,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Clear the search input and results
   async function clearSearch() {
-    searchInput.value = ""; 
+    searchInput.value = "";
     pokemonResults.innerHTML = "";
     previousResults = [];
     updatePreviousSearches();
@@ -251,19 +250,19 @@ document.addEventListener("DOMContentLoaded", function () {
     pokemonResults.appendChild(cardContainer);
 
     // Add eventListener for mouseover to display tooltip
-    cardContainer.addEventListener("mouseover", function (){
+    cardContainer.addEventListener("mouseover", function () {
       toolTipElement.style.visibility = "visible";
       //displayAbilitiesTooltip(pokemon, toolTipElement);
       createAbilityTooltipText(pokemon);
     });
 
     // Add Event listener for mouse out to hide tooltip
-    cardContainer.addEventListener("mouseout", function(){
+    cardContainer.addEventListener("mouseout", function () {
       tooltipElement.style.visibility = "hidden";
-    }); 
+    });
   }
 
-  // Update the UI with previous search results and displays them
+  // Update the UI with previous search results and display
   function updatePreviousSearches() {
     previousSearches.innerHTML = "";
     previousSearchesHeading.classList.remove("hidden");
@@ -277,7 +276,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const name = document.createElement("p");
       name.textContent = result.name;
       previousResultItem.appendChild(name);
-
       previousSearches.appendChild(previousResultItem);
     });
   }
