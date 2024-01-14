@@ -14,18 +14,26 @@ This repository contains the Flatiron Phase 1 Project for Cesar Colunga. The sou
 
 ## Getting Started
 
-### Usage
-
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/colunc01/phase-1-pokemon-search-app.git
+   git clone https://github.com/colunc01/phase-1-pokemon-search-app-cesar.git
 
 2. Open ```index.html``` in your browser.
+
+## Usage:
+
+1. Load the Single Page Application (SPA).
+2. Search through Pokemon by correctly spelling the name in the search bar.
+   Ex: teddiursa, pikachu, entei
+3. Create a team of randomly generated pokemon
+4. The sprite animation, name, and ID number of pokemon will appear. When mouseover a Pokemon card the abilities would appear.
 
 ## Acknowledgements
 
  - [PokeAPI](https://pokeapi.co/)
  - [Pokeball_Flaticon] (https://cdn-icons-png.flaticon.com/512/1169/1169608.png)
  - [Project_Requirements] (https://learning.flatironschool.com/courses/6190/pages/flex-phase-1-project-review-guidelines?module_item_id=526979)
- 
+ - [My_Blog_Post] (https://medium.com/@cesara.colunga/blog-post-exploring-json-in-a-pokemon-search-spa-625b1a7a71fc) 
+ - [github_repo] (https://github.com/colunc01/project-1-pokemon-search-app-cesar)
+ - [YouTube_Video_Link] (https://youtu.be/-WiWQbWib_M)

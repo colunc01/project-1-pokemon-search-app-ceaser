@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let previousResults = [];
   let randomTeam = [];
 
-  //Add event listeners to buttons and searchinput
+  //Add event listeners to buttons and search input
   searchButton.addEventListener("click", handleSearch);
   clearButton.addEventListener("click", clearSearch);
   createTeam.addEventListener("click", createsYourTeam);
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Checks if the Search Term is empty
     if (searchTerm === "") {
-      alert("Please enter a valid Pokemon name.");
+      alert("Error: Search Input is Blank, please insert a Pokemon Name");
       return;
     }
 
@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `https://pokeapi.co/api/v2/pokemon/${searchTerm}`
       );
       const data = await response.json();
+    // console.log(data); // prints the pokemon information after the fetching data
 
       // Determines if this is a regular search or Creating a Team
       if (!isTeamSearch) {
@@ -141,8 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function is called that would get 5 random pokemon and fetch 3 attributes of each
   async function createsYourTeam() {
-    const randomPokemonIds = Array.from(
-      { length: 6 },
+    const randomPokemonIds = Array.from({ length: 6 },
       () => Math.floor(Math.random() * 700) + 1 // Assuming 700 are the maximum amount of pokemon
     );
 
@@ -155,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < randomPokemonIds.length; i++) {
       await fetchPokemon(randomPokemonIds[i], true);
     }
+    // console.log(randomTeam); // prints the random team array containing the information from the API.
     loadingSpinner.style.display = "none";
     // Show team container
     clearTeamButton.classList.remove("hidden");
