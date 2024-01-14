@@ -118,12 +118,13 @@ document.addEventListener("DOMContentLoaded", function () {
     toolTipElement.classList.add("tooltip");
     cardContainer.appendChild(toolTipElement);
 
+    // Event Listener for the mouseover which would display the tooltip
     cardContainer.addEventListener("mouseover", (event) =>
       handlePokemonCardHover(event, pokemon, toolTipElement)
     );
+    // Event Listener for the mouseout which would then make tooltips visibility hidden
     cardContainer.addEventListener(
-      "mouseout",
-      () => (toolTipElement.style.visibility = "hidden")
+      "mouseout", () => (toolTipElement.style.visibility = "hidden")
     );
   }
 
