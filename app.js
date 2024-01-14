@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let previousResults = [];
   let randomTeam = [];
 
-  //Add event listeners to buttons and search input
+  //Add event listeners to buttons and searchinput
   searchButton.addEventListener("click", handleSearch);
   clearButton.addEventListener("click", clearSearch);
   createTeam.addEventListener("click", createsYourTeam);
@@ -121,7 +121,8 @@ document.addEventListener("DOMContentLoaded", function () {
     cardContainer.addEventListener("mouseover", (event) =>
       handlePokemonCardHover(event, pokemon, toolTipElement)
     );
-    cardContainer.addEventListener( "mouseout", 
+    cardContainer.addEventListener(
+      "mouseout",
       () => (toolTipElement.style.visibility = "hidden")
     );
   }
@@ -139,7 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function is called that would get 5 random pokemon and fetch 3 attributes of each
   async function createsYourTeam() {
-    const randomPokemonIds = Array.from({ length: 6 },
+    const randomPokemonIds = Array.from(
+      { length: 6 },
       () => Math.floor(Math.random() * 700) + 1 // Assuming 700 are the maximum amount of pokemon
     );
 
@@ -290,4 +292,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
